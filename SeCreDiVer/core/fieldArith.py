@@ -18,7 +18,9 @@ def is_prime(m:int,k=20):
         r=randbelow(m-3)+2
         p=q
         while(p<m-1):
-            if p!=m-1 and powmod(r,p,m)==m-1:
+            if p==q and(powmod(r,p,m)==1 or powmod(r,p,m)==m-1):
+                break
+            elif powmod(r,p,m)==m-1:
                 break
             else:
                 p*=2
