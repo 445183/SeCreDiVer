@@ -19,8 +19,9 @@ def is_prime(m:int,k=20):
         p=q
         while(p<m-1):
             if p!=m-1 and powmod(r,p,m)==m-1:
-                continue
-            p*=2
+                break
+            else:
+                p*=2
         if p==m-1:
             return False
     return True
