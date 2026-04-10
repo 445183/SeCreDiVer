@@ -1,6 +1,6 @@
 # # Se.Cre.Di.Ver :-
 *Selective Credential Disclosure & Verification*
-
+<br><br>
 **-By** : *Aryan Kurkure*;
           *Devansh Masani*.
 
@@ -44,3 +44,11 @@
    3. ***Verifier*** - Can **upload the disclosure files** of the candidate to check if its **valid or no by Merkle trees** and also **states the field values revealed in order to check if all required fields or parameters by the verifier are present or no**.
 
 *All three would also be having the power to revoke the credentials which would be effectively used to revoke any credential if found malicious, either by the issuer or the verifier.*
+
+## -> Table of Contents :
+
+ * streamlit interface explanation
+
+1. Issuer page
+2. Holder page
+3. Verifier page
