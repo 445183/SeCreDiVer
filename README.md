@@ -123,6 +123,8 @@ Allows the institution to;
 
 <br>
                       Eg; degree ; str ; B.Tech Data Science and Artificial Intelligence <br>
+
+<br>
                       ***NOTE:- field and field value would be primarily taken as text_input and data type of field value by radio in streamlit***
 
 <br>
