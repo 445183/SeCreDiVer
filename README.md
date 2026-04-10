@@ -285,24 +285,45 @@ Allows the verifier to;
 ## -> Project structure :
 
 *SeCreDiVer/
+<br>
 |
+<br>
 |-- core/
+<br>
 |   |-- ec.py           elliptic curve operations and secp256k1 constants
+<br>
 |   |-- ecdsa.py        key generation, signing, verification
+<br>
 |   |-- fieldArith.py   modular inverse and primality
+<br>
 |   |-- fieldEnc.py     field value encoding to bytes
+<br>
 |   |-- hashing.py      sha256 wrappers for leaf and node hashing
+<br>
 |   |-- merkle.py       Merkle tree build, proof, verify, serialisation
+<br>
 |
+<br>
 |-- issuer/
+<br>
 |   |-- authority.py    IssuerAuthority class — issuance pipeline
+<br>
 |   |-- revocation.py   revocation registry read and write
+<br>
 |
+<br>
 |-- holder/
+<br>
 |   |-- wallet.py       credential storage and retrieval
+<br>
 |   |-- disclosure.py   selective disclosure packet creation
+<br>
 |
+<br>
 |-- verifier/
+<br>
 |   |-- verify.py       four-check verification pipeline
+<br>
 |
+<br>
 |-- app.py              Streamlit UI — Issuer, Owner, Verification tabs*
