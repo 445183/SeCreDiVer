@@ -4,7 +4,7 @@
 **-By** : *Aryan Kurkure*;
           *Devansh Masani*.
 
-**-Pursuing** : *B.Tech in Data Science & Artificial Intelligence*.
+**-Pursuing** : *B.Tech in Data Science & Artificial Intelligence, IIT Roorkee*.
 
 **-Date** : *10th April 2026*.
 
