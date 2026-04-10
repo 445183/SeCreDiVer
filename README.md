@@ -1,4 +1,4 @@
-# Se.Cre.Di.Ver :-
+# # Se.Cre.Di.Ver :-
 *Selective Credential Disclosure & Verification*
 
 **-By** : *Aryan Kurkure*;
@@ -8,7 +8,7 @@
 
 **-Date** : *10th April 2026*.
 
-## Problem Statement -
+## -> Problem Statement -
    As far as real life usage of credentials is concerned, they are often exploited in terms of both against the person holding it and also may be by the person holding it as well.
 
 ### How ?
@@ -20,14 +20,16 @@
 
    One common place of actual realization would be the data leaks and tampering happening, or more commonly in daily life calls from companies you might of recently registered with and might have shared phone number just for otp verification, even highlighted in many movies.
 
-## Solution -
+## -> Solution -
    Now knowing the two main issues with credentials handling, we can say what we want to uphold is user's privacy along with not letting him/her to tamper the data or get it verified if so. So, is why the name of project is **Selective Credential Disclosure and Verification**;
 
    So, as far as privacy is concerned we would be achieving it via hashing *(In layman terms it deals with unique representation of any given data piece be it string, integer etc. into a secure 256 bits representation, in context to sha256 protocol being used in the project)* rest of the credential fields or parameters which the user doesn't want to reveal or are required by the authority which's verifying.
    
    Moving on to to the verification purposes, this is where it gets interesting and requires the most of the project's logic to jump in; we would be achieving this from two perspectives;
    1. If its actually issued by the institution being stated; 
-            this would be taken care by **ECDSA** *(Elliptic Curve Digital Signing Algorithm)*, which in brief works over modular inverses, and arithmetic operations in 2D and different private keys being held by institutions which makes each institution which is issuing the cred. unique;
+
+         this would be taken care by **ECDSA** *(Elliptic Curve Digital Signing Algorithm)*, which in brief works over modular inverses, and arithmetic operations in 2D and different private keys being held by institutions which makes each institution which is issuing the cred. unique;
    
-   2. If the data is consistent or no;
-            by the concept of **Merkle trees** briefly, which would be bent on the fact of hashing the credentials originally for the uppermost layer or the leaves after which each adjacent leaf would be paired up and their strings' concatenation would be hashed to form the lower root node, we would be doing it iteratively even by pairing up the nodes until we are left with only one root, if you change any of the credential fields now, this would cause the lowermost or singular root to change by the principle of hashing being one-one function hence, effectively being a measure to check on tampering.
+   3. If the data is consistent or no;
+
+         by the concept of **Merkle trees** briefly, which would be bent on the fact of hashing the credentials originally for the uppermost layer or the leaves after which each adjacent leaf would be paired up and their strings' concatenation would be hashed to form the lower root node, we would be doing it iteratively even by pairing up the nodes until we are left with only one root, if you change any of the credential fields now, this would cause the lowermost or singular root to change by the principle of hashing being one-one function hence, effectively being a measure to check on tampering.
