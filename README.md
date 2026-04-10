@@ -73,7 +73,7 @@
 ## -> Table of Contents :
 <br>
 <br>
-* streamlit interface explanation
+# streamlit interface explanation
 
 1. Issuer page
 2. Holder page
@@ -83,4 +83,4 @@
 <br>
 <br>
 
-### ***** Streamlit explanation -
+### # Streamlit explanation -
