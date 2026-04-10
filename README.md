@@ -30,12 +30,17 @@
 
          this would be taken care by **ECDSA** *(Elliptic Curve Digital Signing Algorithm)*, which in brief works over modular inverses, and arithmetic operations in 2D and different private keys being held by institutions which makes each institution which is issuing the cred. unique;
    
-   3. If the data is consistent or no;
+   2. If the data is consistent or no;
 
          by the concept of **Merkle trees** briefly, which would be bent on the fact of hashing the credentials originally for the uppermost layer or the leaves after which each adjacent leaf would be paired up and their strings' concatenation would be hashed to form the lower root node, we would be doing it iteratively even by pairing up the nodes until we are left with only one root, if you change any of the credential fields now, this would cause the lowermost or singular root to change by the principle of hashing being one-one function hence, effectively being a measure to check on tampering.
 
-
-
-
-
 ## -> Flow of the project :
+   As identified earlier the project consists of 3 main pillars which would be having different levels of control over the credentials and how they are allowed to interact with them (all of those three would be having different separate tabs in the interface);
+   
+   1. ***Issuer*** - relates to the institution which would be creating the credentials, can possibly **create and issue** credentials with different fields in different people's name, identity would be safeguarded by the **unique private key** generated for them used in ECDSA ;
+      
+   2. ***Holder*** - as the name suggests, it allows for **searching for the credentials** and downloading a **disclosure file** which would provide the user with only the **fields he/she wants disclosed to be revealed** and rest all **field names would be mentioned but the values would be hashed**, furthermore the disclosure would contain the **adjacent leaves or root nodes for rebuilding the tree to get the lowermost root node for verification**.
+
+   3. ***Verifier*** - Can **upload the disclosure files** of the candidate to check if its **valid or no by Merkle trees** and also **states the field values revealed in order to check if all required fields or parameters by the verifier are present or no**.
+
+*All three would also be having the power to revoke the credentials which would be effectively used to revoke any credential if found malicious, either by the issuer or the verifier.*
