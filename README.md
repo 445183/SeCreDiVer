@@ -84,4 +84,10 @@
 <br>
 
 ### # Streamlit explanation -
-It consists nothing to the logical essence of the project but to the interface part, and enables locally hosting the project for better experience of how the project would look like in case its adapted in the coming digital era.
+   It consists nothing to the logical essence of the project but to the interface part, and enables locally hosting the project for better experience of how the project would look like in case its adapted in the ongoing digital era.
+   Some of the importantly used functions from the streamlit library after importing it via *import streamlit as sl* are :
+   1. **sl.set_page_config()** -> It takes in parameters like *page_title, page_icon and layout* which help customize the appearance;
+   2. **sl.tabs()** -> It helps create several pages of interaction within the same page of the interface, it takes in list of names of the tabs which we want to create and returns the same number of tabs which can be unwrapped as tab1, tab2,... =sl.tabs(["..", "..", ...]);
+   3. **sl.session_state** -> Undeniably its the most important part of the project as, streamlit hosted interface has the issue of reloading everytime there's interaction between the interface and the user, so in order to save the inputs etc. between those updations we use sl.session_state;
+         * Eg; sl.session_state.authority is used to store the name of the institution; further more its important to          
+         check if some object like 'authority' exists within sl.session_state we check it using membership                   operators like *"in"* !
