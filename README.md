@@ -84,3 +84,4 @@
 <br>
 
 ### # Streamlit explanation -
+It consists nothing to the logical essence of the project but to the interface part, and enables locally hosting the project for better experience of how the project would look like in case its adapted in the coming digital era.
