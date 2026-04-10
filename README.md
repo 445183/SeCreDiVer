@@ -148,7 +148,7 @@ Allows the issuer to;
    After all field pairs are collected, **mkTree()** is called with the list of *(name, value)* tuples. It works in two stages:
 
    - **Leaf layer** : each field is passed through **encode_field()** and then **hash_leaf()** which applies **sha256** to produce a 32-byte leaf hash. All leaf hashes form the bottom layer of the tree.
-   - **Upward pairing** : adjacent leaves are paired and their concatenation is hashed using **hash_node()** to produce the next level. If the count at any level is odd, the last node is paired with itself. This repeats until only one hash remains — the **Merkle root**.
+   - **Downward pairing** : adjacent leaves are paired and their concatenation is hashed using **hash_node()** to produce the next level. If the count at any level is odd, the last node is paired with itself. This repeats until only one hash remains — the **Merkle root**.
 
    The entire tree is stored as a list of lists of bytes, serialised to hex strings via **bytToStr()** before being stored in the credential dictionary, since raw bytes cannot be written to a JSON file.
 
@@ -197,9 +197,9 @@ Allows the holder to;
 <br>
 
 ##### b) Hidden field hashing — **hash_leaf()** in **core/hashing.py** :
-   For every field the holder does **not** wish to reveal, **showCred()** takes that field's precomputed leaf hash directly from the tree's bottom layer — **ht[0][i].hex()** — and includes it in the disclosure under the **hidden** dictionary. The verifier receives these hashes but cannot reverse them to find the original values, since **sha256** is a one-way function. Yet the verifier still needs them to recompute the Merkle root when verifying revealed fields, because every leaf — revealed or hidden — contributes to the root computation.
+   For every field the holder does **not** wish to reveal, **showCred()** takes that field's precomputed leaf hash directly from the tree's top layer — **ht[0][i].hex()** — and includes it in the disclosure under the **hidden** dictionary. The verifier receives these hashes but cannot reverse them to find the original values, since **sha256** is a one-way function. Yet the verifier still needs them to recompute the Merkle root when verifying revealed fields, because every leaf — revealed or hidden — contributes to the root computation.
 
-   This is the cryptographic mechanism behind privacy in this system. Hidden fields are not absent from the disclosure — they are present as hash commitments. Their existence is acknowledged but their content is protected.
+   This is the cryptographic mechanism behind privacy in this system. Hidden fields are not absent from the disclosure — they are present as hash commitments. Their **existence is acknowledged but their content is protected**.
 
 <br>
 
@@ -244,7 +244,7 @@ Allows the verifier to;
    2. The proof path is iterated. At each step, the current hash and its sibling are combined using **hash_node()**. The **side** value determines the order — if the sibling is on the left, it goes first; if on the right, the current hash goes first.
    3. After all levels are processed, the final computed hash must equal **bytes.fromhex(disc['root'])**.
 
-   If any revealed field's computed root does not match the stored root, verification fails with **'Invalid proof for consistency !'**. This proves that either the field value was tampered with after issuance, or the proof path itself was falsified.
+   If any revealed field's computed root does not match the stored root, verification fails with **'Invalid proof for consistency !'**. This proves that either the field value was tampered with after issuance, or the proof path itself was wrong.
 
 <br>
 
