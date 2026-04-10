@@ -118,13 +118,13 @@
 ### **I. Issuer page -**
 Allows the issuer to;
 
-   1. **Register an institution** by entering its name and clicking `SUBMIT`. Upon submission, an `IssuerAuthority` object is created and stored in `sl.session_state.authority`. This object internally calls `genKeys()` which generates a cryptographic keypair for the institution consisting of a *private key* and a *public key*, the mechanism behind which is explained ahead.
+   1. **Register an institution** by entering its name and clicking **SUBMIT**. Upon submission, an **IssuerAuthority** object is created and stored in **sl.session_state.authority**. This object internally calls **genKeys()** which generates a cryptographic keypair for the institution consisting of a *private key* and a *public key*, the mechanism behind which is explained ahead.
 
-   2. **Add credential fields** one by one, each having a name, a type *(str, int, float, bool)* and a value entered through type-specific widgets. Each field is accumulated as a dictionary entry in `sl.session_state.fields_buffer` until issuance.
+   2. **Add credential fields** one by one, each having a name, a type *(str, int, float, bool)* and a value entered through type-specific widgets. Each field is accumulated as a dictionary entry in **sl.session_state.fields_buffer** until issuance.
 
-   3. **Issue a credential** by providing the holder's name and validity days, after which `issueCred()` is called. This internally builds a Merkle tree over the fields, signs the Merkle root with ECDSA, and packages everything into a credential dictionary which is saved to the local wallet directory via `save_cred()`.
+   3. **Issue a credential** by providing the holder's name and validity days, after which **issueCred()** is called. This internally builds a Merkle tree over the fields, signs the Merkle root with ECDSA, and packages everything into a credential dictionary which is saved to the local wallet directory via **save_cred()**.
 
-   4. **View the issued credential** displayed via `sl.json()` directly beneath the issue section, showing all fields, the Merkle root, the ECDSA signature, timestamps, and the institution's public key.
+   4. **View the issued credential** displayed via **sl.json()** directly beneath the issue section, showing all fields, the Merkle root, the ECDSA signature, timestamps, and the institution's public key.
 
 <br>
 
@@ -132,38 +132,38 @@ Allows the issuer to;
 
 <br>
 
-##### a) Key generation — `genKeys()` in `core/ecdsa.py` :
-   When the institution is registered, `genKeys()` is called. It picks a cryptographically secure random integer *d* in the range [1, n-1] as the **private key** using `secrets.randbelow()`. The **public key** Q is then derived as *d × G* where G is the generator point of the secp256k1 elliptic curve — a fixed standardised point agreed upon universally. This multiplication is performed by `scalMul()` in `core/ec.py` using the *double-and-add* algorithm, which is essentially repeated point addition on the curve but done efficiently by processing the binary representation of d.
+##### a) Key generation — **genKeys()** in **core/ecdsa.py** :
+   When the institution is registered, **genKeys()** is called. It picks a cryptographically secure random integer *d* in the range [1, n-1] as the **private key** using **secrets.randbelow()**. The **public key** Q is then derived as *d × G* where G is the generator point of the secp256k1 elliptic curve — a fixed standardised point agreed upon universally. This multiplication is performed by **scalMul()** in **core/ec.py** using the *double-and-add* algorithm, which is essentially repeated point addition on the curve but done efficiently by processing the binary representation of d.
 
-   The security of this rests on the **Elliptic Curve Discrete Logarithm Problem** — given Q and G, finding d is computationally infeasible even with the most powerful hardware, because scalar multiplication on an elliptic curve is a one-way operation. The private key never leaves `sl.session_state.authority`; the public key is embedded into every issued credential via `xyTob64()` which serialises the EC point coordinates to a base64url string.
-
-<br>
-
-##### b) Field encoding — `encode_field()` in `core/fieldEnc.py` :
-   Before any field value can be hashed, it must be converted to bytes in a consistent and unambiguous way. `encode_field()` takes the field name and its Python value and produces a UTF-8 encoded byte string of the format `name:type:value`. For example, a field named *degree* with value *BSc CS* becomes `b'degree:str:BSc CS'`. The type label is derived from `type(value).__name__` and is included in the encoding so that two fields with the same value but different types — such as integer 1 and boolean True — never produce the same byte string and therefore never collide in the Merkle tree.
+   The security of this rests on the **Elliptic Curve Discrete Logarithm Problem** — given Q and G, finding d is computationally infeasible even with the most powerful hardware, because scalar multiplication on an elliptic curve is a one-way operation. The private key never leaves **sl.session_state.authority**; the public key is embedded into every issued credential via **xyTob64()** which serialises the EC point coordinates to a base64url string.
 
 <br>
 
-##### c) Merkle tree construction — `mkTree()` in `core/merkle.py` :
-   After all field pairs are collected, `mkTree()` is called with the list of *(name, value)* tuples. It works in two stages:
+##### b) Field encoding — **encode_field()** in **core/fieldEnc.py** :
+   Before any field value can be hashed, it must be converted to bytes in a consistent and unambiguous way. **encode_field()** takes the field name and its Python value and produces a UTF-8 encoded byte string of the format **name:type:value**. For example, a field named *degree* with value *BSc CS* becomes **b'degree:str:BSc CS'**. The type label is derived from **type(value).__name__** and is included in the encoding so that two fields with the same value but different types — such as integer 1 and boolean True — never produce the same byte string and therefore never collide in the Merkle tree.
 
-   - **Leaf layer** : each field is passed through `encode_field()` and then `hash_leaf()` which applies `sha256` to produce a 32-byte leaf hash. All leaf hashes form the bottom layer of the tree.
-   - **Upward pairing** : adjacent leaves are paired and their concatenation is hashed using `hash_node()` to produce the next level. If the count at any level is odd, the last node is paired with itself. This repeats until only one hash remains — the **Merkle root**.
+<br>
 
-   The entire tree is stored as a list of lists of bytes, serialised to hex strings via `bytToStr()` before being stored in the credential dictionary, since raw bytes cannot be written to a JSON file.
+##### c) Merkle tree construction — **mkTree()** in **core/merkle.py** :
+   After all field pairs are collected, **mkTree()** is called with the list of *(name, value)* tuples. It works in two stages:
+
+   - **Leaf layer** : each field is passed through **encode_field()** and then **hash_leaf()** which applies **sha256** to produce a 32-byte leaf hash. All leaf hashes form the bottom layer of the tree.
+   - **Upward pairing** : adjacent leaves are paired and their concatenation is hashed using **hash_node()** to produce the next level. If the count at any level is odd, the last node is paired with itself. This repeats until only one hash remains — the **Merkle root**.
+
+   The entire tree is stored as a list of lists of bytes, serialised to hex strings via **bytToStr()** before being stored in the credential dictionary, since raw bytes cannot be written to a JSON file.
 
    The significance of this structure is that changing any single field value changes its leaf hash, which cascades upward changing every ancestor hash, and ultimately changes the root. Since the root is signed by the issuer, any such change invalidates the signature and is immediately detectable during verification.
 
 <br>
 
-##### d) ECDSA signing — `sign()` in `core/ecdsa.py` :
-   Once the Merkle root is obtained as bytes, `sign(root, self.priv_k)` is called. The signing process works as follows:
+##### d) ECDSA signing — **sign()** in **core/ecdsa.py** :
+   Once the Merkle root is obtained as bytes, **sign(root, self.priv_k)** is called. The signing process works as follows:
 
-   1. The root bytes are hashed with `sha256` and converted to an integer *z* modulo *n*, producing the message digest.
-   2. A fresh random nonce *k* is chosen from [1, n-1] via `secrets.randbelow()`.
-   3. The point *R = k × G* is computed via `scalMul()`. The x-coordinate of R modulo n gives the signature component *r*.
+   1. The root bytes are hashed with **sha256** and converted to an integer *z* modulo *n*, producing the message digest.
+   2. A fresh random nonce *k* is chosen from [1, n-1] via **secrets.randbelow()**.
+   3. The point *R = k × G* is computed via **scalMul()**. The x-coordinate of R modulo n gives the signature component *r*.
    4. The signature component *s* is computed as *modinv(k, n) × (z + r × d) mod n* where *d* is the private key.
-   5. The pair *(r, s)* is the signature. It is serialised to a dictionary of 64-character hex strings via `rsToDict()` for JSON storage.
+   5. The pair *(r, s)* is the signature. It is serialised to a dictionary of 64-character hex strings via **rsToDict()** for JSON storage.
 
    The nonce *k* is discarded immediately after use. It must never be reused — reusing k across two signatures mathematically leaks the private key. The final credential dictionary contains this serialised signature alongside the root hex, the public key, all fields with their types, the serialised Merkle levels, and the issuance and expiry timestamps.
 
@@ -173,15 +173,15 @@ Allows the issuer to;
 ### **II. Holder page -**
 Allows the holder to;
 
-   1. **Find credentials by name** — the holder enters their name and clicks `FIND MY CREDENTIALS`. The system calls `list_cred()` which reads all `.json` filenames from the wallet directory, then `load_cred()` on each, filtering those where `cred['holder']` matches the entered name. Matching credential IDs are stored in `sl.session_state.my_creds`.
+   1. **Find credentials by name** — the holder enters their name and clicks **FIND MY CREDENTIALS**. The system calls **list_cred()** which reads all **.json** filenames from the wallet directory, then **load_cred()** on each, filtering those where **cred['holder']** matches the entered name. Matching credential IDs are stored in **sl.session_state.my_creds**.
 
-   2. **Load or delete a credential** — from a radio selector showing all matching credential IDs, the holder can load a specific credential into `sl.session_state.last_cred` or delete it from disk via `del_cred()`.
+   2. **Load or delete a credential** — from a radio selector showing all matching credential IDs, the holder can load a specific credential into **sl.session_state.last_cred** or delete it from disk via **del_cred()**.
 
-   3. **Select an institution** — if multiple credentials exist for the same holder name from different institutions, a radio selector shows the issuer names and the corresponding credential is set as `sl.session_state.last_cred`.
+   3. **Select an institution** — if multiple credentials exist for the same holder name from different institutions, a radio selector shows the issuer names and the corresponding credential is set as **sl.session_state.last_cred**.
 
    4. **Select fields to reveal** — field names from the loaded credential are displayed. The holder enters the indices of the fields they wish to reveal as space-separated integers, which are mapped to field names internally.
 
-   5. **Create a disclosure** — clicking `SUBMIT QUERY` calls `showCred()` which rebuilds the Merkle tree from the stored fields, generates proof paths for revealed fields, and computes leaf hashes for hidden fields. The resulting disclosure dictionary is stored in `sl.session_state.last_disc` and offered for download as a JSON file via `sl.download_button()`.
+   5. **Create a disclosure** — clicking **SUBMIT QUERY** calls **showCred()** which rebuilds the Merkle tree from the stored fields, generates proof paths for revealed fields, and computes leaf hashes for hidden fields. The resulting disclosure dictionary is stored in **sl.session_state.last_disc** and offered for download as a JSON file via **sl.download_button()**.
 
 <br>
 
@@ -189,30 +189,30 @@ Allows the holder to;
 
 <br>
 
-##### a) Merkle proof generation — `getProof()` in `core/merkle.py` :
-   For each field the holder chooses to reveal, `getProof(tree, index)` generates the **sibling hash path** from that leaf up to the root. At each level of the tree, it identifies the sibling of the current node — the adjacent hash that was paired with it — and records whether that sibling sits to the left or right. This *(sibling_hash, side)* pair is collected for every level, giving a list of pairs that together allow anyone to independently recompute the root from just the leaf value.
+##### a) Merkle proof generation — **getProof()** in **core/merkle.py** :
+   For each field the holder chooses to reveal, **getProof(tree, index)** generates the **sibling hash path** from that leaf up to the root. At each level of the tree, it identifies the sibling of the current node — the adjacent hash that was paired with it — and records whether that sibling sits to the left or right. This *(sibling_hash, side)* pair is collected for every level, giving a list of pairs that together allow anyone to independently recompute the root from just the leaf value.
 
    The proof path is what makes selective disclosure possible. The verifier can confirm a single field is genuine without needing to see any other field, because the proof path provides exactly the information needed to reconstruct the root — no more, no less.
 
 <br>
 
-##### b) Hidden field hashing — `hash_leaf()` in `core/hashing.py` :
-   For every field the holder does **not** wish to reveal, `showCred()` takes that field's precomputed leaf hash directly from the tree's bottom layer — `ht[0][i].hex()` — and includes it in the disclosure under the `hidden` dictionary. The verifier receives these hashes but cannot reverse them to find the original values, since `sha256` is a one-way function. Yet the verifier still needs them to recompute the Merkle root when verifying revealed fields, because every leaf — revealed or hidden — contributes to the root computation.
+##### b) Hidden field hashing — **hash_leaf()** in **core/hashing.py** :
+   For every field the holder does **not** wish to reveal, **showCred()** takes that field's precomputed leaf hash directly from the tree's bottom layer — **ht[0][i].hex()** — and includes it in the disclosure under the **hidden** dictionary. The verifier receives these hashes but cannot reverse them to find the original values, since **sha256** is a one-way function. Yet the verifier still needs them to recompute the Merkle root when verifying revealed fields, because every leaf — revealed or hidden — contributes to the root computation.
 
    This is the cryptographic mechanism behind privacy in this system. Hidden fields are not absent from the disclosure — they are present as hash commitments. Their existence is acknowledged but their content is protected.
 
 <br>
 
 ##### c) Disclosure packet structure :
-   The disclosure dictionary produced by `showCred()` contains:
-   - `issuer_public_key` — the base64url serialised EC point of the issuing institution.
-   - `root` — the Merkle root hex string copied from the credential.
-   - `signature` — the serialised ECDSA signature *(r, s)* copied from the credential.
-   - `issued_at` and `expires_at` — ISO 8601 UTC timestamp strings.
-   - `revealed` — a list of dictionaries, one per revealed field, each containing the field name, value, type label, leaf index, and Merkle proof path as a list of `[hex_string, side]` pairs.
-   - `hidden` — a dictionary mapping each hidden field name to its leaf hash hex string.
+   The disclosure dictionary produced by **showCred()** contains:
+   - **issuer_public_key** — the base64url serialised EC point of the issuing institution.
+   - **root** — the Merkle root hex string copied from the credential.
+   - **signature** — the serialised ECDSA signature *(r, s)* copied from the credential.
+   - **issued_at** and **expires_at** — ISO 8601 UTC timestamp strings.
+   - **revealed** — a list of dictionaries, one per revealed field, each containing the field name, value, type label, leaf index, and Merkle proof path as a list of **[hex_string, side]** pairs.
+   - **hidden** — a dictionary mapping each hidden field name to its leaf hash hex string.
 
-   Every value in this dictionary is JSON serialisable, so `json.dumps()` called by `sl.download_button()` never raises a `TypeError`.
+   Every value in this dictionary is JSON serialisable, so **json.dumps()** called by **sl.download_button()** never raises a **TypeError**.
 
 <br>
 <br>
@@ -220,11 +220,11 @@ Allows the holder to;
 ### **III. Verifier page -**
 Allows the verifier to;
 
-   1. **Upload a disclosure file** — the verifier uploads the `.json` disclosure file produced by the holder via `sl.file_uploader()`. The file bytes are read with `.getvalue().decode()` and parsed with `json.loads()`. The parsed dictionary is stored in `sl.session_state.disc`. If the JSON is malformed, an error is shown and no further action is taken.
+   1. **Upload a disclosure file** — the verifier uploads the **.json** disclosure file produced by the holder via **sl.file_uploader()**. The file bytes are read with **.getvalue().decode()** and parsed with **json.loads()**. The parsed dictionary is stored in **sl.session_state.disc**. If the JSON is malformed, an error is shown and no further action is taken.
 
-   2. **Verify the disclosure** — clicking `VERIFY` calls `verifyDisc(disc)` from `verifier/verify.py`. This function runs four sequential checks and returns a *(bool, reason_string)* tuple. If valid, the revealed fields and their values are displayed along with the issuance and expiry timestamps and a list of hidden field names. If invalid, the exact reason is shown via `sl.error()`.
+   2. **Verify the disclosure** — clicking **VERIFY** calls **verifyDisc(disc)** from **verifier/verify.py**. This function runs four sequential checks and returns a *(bool, reason_string)* tuple. If valid, the revealed fields and their values are displayed along with the issuance and expiry timestamps and a list of hidden field names. If invalid, the exact reason is shown via **sl.error()**.
 
-   3. **Revoke a credential** — an expander at the bottom of the page allows any actor to enter a credential root hex and call `revCred()` which appends it to the revocation registry file. Any future verification of that credential will fail at Check 4.
+   3. **Revoke a credential** — an expander at the bottom of the page allows any actor to enter a credential root hex and call **revCred()** which appends it to the revocation registry file. Any future verification of that credential will fail at Check 4.
 
 <br>
 
@@ -233,37 +233,37 @@ Allows the verifier to;
 <br>
 
 ##### a) Check 1 — Expiry :
-   `datetime.fromisoformat(disc['expires_at'])` parses the expiry timestamp stored in the disclosure. It is compared against `datetime.now(timezone.utc)`. If the current time is past the expiry, the function immediately returns `(False, 'Credential has expired !')`. This check requires no cryptography — it is a straightforward timestamp comparison — but it is placed first because it is the cheapest check to run and eliminates stale credentials before any heavier computation begins.
+   **datetime.fromisoformat(disc['expires_at'])** parses the expiry timestamp stored in the disclosure. It is compared against **datetime.now(timezone.utc)**. If the current time is past the expiry, the function immediately returns **(False, 'Credential has expired !')**. This check requires no cryptography — it is a straightforward timestamp comparison — but it is placed first because it is the cheapest check to run and eliminates stale credentials before any heavier computation begins.
 
 <br>
 
-##### b) Check 2 — Merkle proof verification — `verifyProof()` in `core/merkle.py` :
-   For each item in `disc['revealed']`, the verifier reconstructs the Merkle root from that single field and its proof path. The process is:
+##### b) Check 2 — Merkle proof verification — **verifyProof()** in **core/merkle.py** :
+   For each item in **disc['revealed']**, the verifier reconstructs the Merkle root from that single field and its proof path. The process is:
 
-   1. The revealed field's name and value are passed to `encode_field()` and then `hash_leaf()` to reproduce the original leaf hash.
-   2. The proof path is iterated. At each step, the current hash and its sibling are combined using `hash_node()`. The `side` value determines the order — if the sibling is on the left, it goes first; if on the right, the current hash goes first.
-   3. After all levels are processed, the final computed hash must equal `bytes.fromhex(disc['root'])`.
+   1. The revealed field's name and value are passed to **encode_field()** and then **hash_leaf()** to reproduce the original leaf hash.
+   2. The proof path is iterated. At each step, the current hash and its sibling are combined using **hash_node()**. The **side** value determines the order — if the sibling is on the left, it goes first; if on the right, the current hash goes first.
+   3. After all levels are processed, the final computed hash must equal **bytes.fromhex(disc['root'])**.
 
-   If any revealed field's computed root does not match the stored root, verification fails with `'Invalid proof for consistency !'`. This proves that either the field value was tampered with after issuance, or the proof path itself was falsified.
+   If any revealed field's computed root does not match the stored root, verification fails with **'Invalid proof for consistency !'**. This proves that either the field value was tampered with after issuance, or the proof path itself was falsified.
 
 <br>
 
-##### c) Check 3 — ECDSA signature verification — `verify()` in `core/ecdsa.py` :
-   The verifier recovers the issuer's public key Q via `xyFromb64(disc['issuer_public_key'])` and the signature *(r, s)* via `dictToRS(disc['signature'])`. The root is converted to bytes via `bytes.fromhex(disc['root'])`. Then `verify(root_bytes, sig, Q)` is called:
+##### c) Check 3 — ECDSA signature verification — **verify()** in **core/ecdsa.p**` :
+   The verifier recovers the issuer's public key Q via **xyFromb64(disc['issuer_public_key'])** and the signature *(r, s)* via **dictToRS(disc['signature'])**. The root is converted to bytes via **bytes.fromhex(disc['root'])**. Then **verify(root_bytes, sig, Q)** is called:
 
    1. The root bytes are hashed and converted to integer *z* exactly as was done during signing.
    2. The modular inverse of *s* is computed. Then *u1 = modinv(s, n) × z mod n* and *u2 = modinv(s, n) × r mod n* are derived.
-   3. The point *u1 × G + u2 × Q* is computed using `scalMul()` and `pointAdd()`.
+   3. The point *u1 × G + u2 × Q* is computed using **scalMul()** and **pointAdd()**.
    4. If the x-coordinate of this point modulo *n* equals *r*, the signature is valid.
 
    This works because the verification equation expands mathematically to reproduce the original nonce point only if the signer held the private key *d*. Without *d*, it is impossible to produce *(r, s)* values that satisfy this equation. A valid result here proves the credential was genuinely signed by the institution whose public key is embedded in the disclosure.
 
-   If verification fails, the function returns `(False, 'Not authenticated by the institution !')`.
+   If verification fails, the function returns **(False, 'Not authenticated by the institution !')**.
 
 <br>
 
-##### d) Check 4 — Revocation — `isRev()` in `issuer/revocation.py` :
-   `isRev(root_hex)` opens `revo_reg.json` from the issuer's revocation registry directory and checks whether `disc['root']` appears in the `revoked` list. If it does, the credential has been explicitly invalidated by the issuer and verification fails with `'The credentials have been revoked by the institution !'`. If the registry file does not exist, no credentials have been revoked and this check passes.
+##### d) Check 4 — Revocation — **isRev()** in **issuer/revocation.py** :
+   **isRev(root_hex)** opens **revo_reg.json** from the issuer's revocation registry directory and checks whether **disc['root']** appears in the **revoked** list. If it does, the credential has been explicitly invalidated by the issuer and verification fails with **'The credentials have been revoked by the institution !'**. If the registry file does not exist, no credentials have been revoked and this check passes.
 
    Revocation provides the issuer with the ability to invalidate credentials after issuance — for instance if a degree is rescinded, an employee is terminated, or a document is reported stolen. Since the Merkle root uniquely identifies every credential, adding it to the revocation list is both simple and unambiguous.
 
@@ -274,9 +274,9 @@ Allows the verifier to;
 ## -> How to run :
 
    1. Clone the repository and navigate to the project directory.
-   2. Install dependencies via `pip install -r requirements.txt`.
-   3. Run the Streamlit app via `streamlit run app.py`.
-   4. The app opens in the browser at `http://localhost:8501`.
+   2. Install dependencies via ***pip install streamlit, hashlib***.
+   3. Run the Streamlit app via **streamlit run app.py**.
+   4. The app opens in the browser at *http://localhost:8501*.
 
 <br>
 <br>
@@ -284,8 +284,7 @@ Allows the verifier to;
 
 ## -> Project structure :
 
-```
-SeCreDiVer/
+*SeCreDiVer/
 |
 |-- core/
 |   |-- ec.py           elliptic curve operations and secp256k1 constants
@@ -293,21 +292,17 @@ SeCreDiVer/
 |   |-- fieldArith.py   modular inverse and primality
 |   |-- fieldEnc.py     field value encoding to bytes
 |   |-- hashing.py      sha256 wrappers for leaf and node hashing
-|   `-- merkle.py       Merkle tree build, proof, verify, serialisation
+|   |-- merkle.py       Merkle tree build, proof, verify, serialisation
 |
 |-- issuer/
 |   |-- authority.py    IssuerAuthority class — issuance pipeline
-|   `-- revocation.py   revocation registry read and write
+|   |-- revocation.py   revocation registry read and write
 |
 |-- holder/
 |   |-- wallet.py       credential storage and retrieval
-|   `-- disclosure.py   selective disclosure packet creation
+|   |-- disclosure.py   selective disclosure packet creation
 |
 |-- verifier/
-|   `-- verify.py       four-check verification pipeline
+|   |-- verify.py       four-check verification pipeline
 |
-|-- zkp/
-|   `-- sfs.py          Schnorr ZKP — Fiat-Shamir (implemented, future use)
-|
-`-- app.py              Streamlit UI — Issuer, Owner, Verification tabs
-```
+|-- app.py              Streamlit UI — Issuer, Owner, Verification tabs*
