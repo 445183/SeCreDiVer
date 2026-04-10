@@ -74,6 +74,7 @@
 <br>
 <br>
 * streamlit interface explanation
+
 1. Issuer page
 2. Holder page
 3. Verifier page
