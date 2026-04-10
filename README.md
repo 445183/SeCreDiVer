@@ -91,20 +91,22 @@
    3. **sl.session_state** -> Undeniably its the most important part of the project as, streamlit hosted interface has the issue of reloading everytime there's interaction between the interface and the user, so in order to save the inputs etc. between those updations we use sl.session_state;
          * Eg; sl.session_state.authority is used to store the name of the institution; further more its important to check if some object like 'authority' exists within sl.session_state we check it using membership operators like *"in"* !
    4. Presentation of data -> *(all take in strings as input)*
-      * **sl.title()**
-      * **sl.header()**
-      * **sl.subheader()**
-      * **sl.write()**
-      * **sl.json()** ; *unlike others this also takes dict, list as inputs along with json formatted string as input, and unlike others which only allow showing text data, this one allows for showing json data.*
+      * **sl.title()**;
+      * **sl.header()**;
+      * **sl.subheader()**;
+      * **sl.write()**;
+      * **sl.json()**; *unlike others this also takes dict, list as inputs along with json formatted string as input, and unlike others which only allow showing text data, this one allows for showing json data.*
+
 <br>
 *sl.divider() is used to create lines in order to partition between two i/o structures of interface*
 <br>
+
    5. Different inputs method ->
       * **sl.text_input()** ; provide one main compulsory string for asking the user about what he/she is supposed to enter and *placeholder='..'* which is like an sample input;
       * **sl.radio()** ; provide a list of possible options in strings out of which one can be selected and would be presented as the returned value;
       * **sl.file_uploader()** ; one main string stating what is expected to be uploaded and then keyword argument *type=[..]* which asks for the data type of files, in our case json.
    6. Showing status of operations in interface -> *(as name suggests, and all take string as message to be diplayed)*
-      * **sl.success()**
-      * **sl.warning()**
-      * **sl.error()**
-   7. To trigger any operation, we use **sl.button()**
+      * **sl.success()**;
+      * **sl.warning()**;
+      * **sl.error()**.
+   7. To trigger any operation, we use **sl.button()**.
