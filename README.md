@@ -98,6 +98,7 @@
       * **sl.json()**; *unlike others this also takes dict, list as inputs along with json formatted string as input, and unlike others which only allow showing text data, this one allows for showing json data.*
 
 <br>
+
 *sl.divider() is used to create lines in order to partition between two i/o structures of interface*
 <br>
 
@@ -117,7 +118,8 @@
 ### **I. Issuer Tab** -
 Allows the institution to;
 <br>
-    1. Create fields -> *asks for 3 things the name of the field, the type of the field value and the field value itself*; <br>
+    1. Create fields -> *asks for 3 things the name of the field, the type of the field value and the field value itself*; 
+<br>
                       Eg; degree ; str ; B.Tech Data Science and Artificial Intelligence <br>
                       ***NOTE:- field and field value would be primarily taken as text_input and data type of field value by radio in streamlit***
     2. Issuing credentials -> 
