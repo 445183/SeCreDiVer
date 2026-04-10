@@ -248,7 +248,7 @@ Allows the verifier to;
 
 <br>
 
-##### c) Check 3 — ECDSA signature verification — **verify()** in **core/ecdsa.p**` :
+##### c) Check 3 — ECDSA signature verification — **verify()** in **core/ecdsa.p** :
    The verifier recovers the issuer's public key Q via **xyFromb64(disc['issuer_public_key'])** and the signature *(r, s)* via **dictToRS(disc['signature'])**. The root is converted to bytes via **bytes.fromhex(disc['root'])**. Then **verify(root_bytes, sig, Q)** is called:
 
    1. The root bytes are hashed and converted to integer *z* exactly as was done during signing.
@@ -273,9 +273,9 @@ Allows the verifier to;
 
 ## -> How to run :
 
-   1. Clone the repository and navigate to the project directory.
-   2. Install dependencies via ***pip install streamlit, hashlib***.
-   3. Run the Streamlit app via **streamlit run app.py**.
+   1. Download the repository and navigate to the project directory *(The main folder, SeCreDiVer)* in command prompt.
+   2. Install dependencies via ***pip install streamlit, hashlib, json***.
+   3. Run the Streamlit app via **streamlit run app.py** command in command prompt ***after step 1.***.
    4. The app opens in the browser at *http://localhost:8501*.
 
 <br>
