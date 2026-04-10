@@ -95,3 +95,9 @@
       * **sl.header()**
       * **sl.subheader()**
       * **sl.write()**
+   5. Different inputs method ->
+      * **sl.text_input()** ; provide one main compulsory string for asking the user about what he/she is supposed to enter and *placeholder='..'* which is like an sample input;
+      * **sl.radio()** ; provide a list of possible options in strings out of which one can be selected and would be presented as the returned value;
+      * **sl.file_uploader()** ; one main string stating what is expected to be uploaded and then keyword argument *type=[..]* which asks for the data type of files, in our case json.
+   6.    
+      * **sl.radio()** ; **
