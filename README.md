@@ -1,13 +1,14 @@
-# # Se.Cre.Di.Ver :-
-*Selective Credential Disclosure & Verification*
+# $\color{#FFD700}{\text{ Se.Cre.Di.Ver}}$
+## *Selective Credential Disclosure & Verification*
 <br>
-###### To run the code refer to the instructions at the last
+
+$\color{#FF0000}{\text{To run the code refer to the instructions at the last}}$
 <br>
 <br>
 <br>
 
-**-By** : *Aryan Kurkure*;
-          *Devansh Masani*.
+**-By** : *Aryan Kurkure*;  25125011      
+          *Devansh Masani*.  25125011   
 
 **-Pursuing** : *B.Tech in Data Science & Artificial Intelligence, IIT Roorkee*.
 
@@ -17,55 +18,124 @@
 <br>
 <br>
 
-## -> Problem Statement :
-   As far as real life usage of credentials is concerned, they are often exploited in terms of both against the person holding it and also may be by the person holding it as well.
-<br>
-<br>
-#### How ?
-1. An example to show how it can be possibly used against the holder is;
-            Suppose the user wants to verify age, but has only access to Aadhaar card, then in that case to reveal his age he would have to reveal his Aadhaar card            as a whole which would be rather way more disclosing, as it would even tell about active address of the person and allows usage in many government websites           such as ration distribution etc.
+## $\color{#FFD700}{\text{-> Problem Statement :}}$
 
-3. When its exploited by the user;
-            Suppose there to be present some digital certificate, or marks then by several online editing tools i can get those updated, in legal terms called as              tampering the data, which would cause issues in terms of consistency of data *(refers to data being unchanged in layman terms)*.
+In our daily lives, we are constantly asked to "prove" who we are. Whether it's applying for a job, entering a building, or registering for a website, we face a broken "Privacy vs. Trust" paradox. To gain an institution's trust, we are currently forced to sacrifice our personal privacy.
 
-   One common place of actual realization would be the data leaks and tampering happening, or more commonly in daily life calls from companies you might of recently registered with and might have shared phone number just for otp verification, even highlighted in many movies.
 
-<br>
-<br>
-<br>
+### **1. The "Aadhaar" Over-Disclosure (The Privacy Leak)**
+Think about the last time you used your Aadhaar card just to verify your age.
+* To show you are "Over 18," you end up handing over a document that contains your permanent home address, your father's name, and your unique biometric ID.
+* This is a massive over-disclosure of your **PII (Personally Identifiable Information)**.
+* Once that data is out there, you lose control; it can be used to track you across government websites or shared with third parties without you ever knowing.
 
-## -> Solution :
-   Now knowing the two main issues with credentials handling, we can say what we want to uphold is user's privacy along with not letting him/her to tamper the data or get it verified if so. So, is why the name of project is **Selective Credential Disclosure and Verification**;
+### **2. The "Photoshop" Fraud (The Trust Gap)**
+Institutions are struggling with a lack of **Data Integrity**.
+* Today, anyone with basic photo-editing skills can "update" their cgpa or change a date on a PDF certificate.
+* Because standard digital documents have no built-in way to prove they haven't been changed since they were issued, tampering has become a major legal and security headache.
 
-   So, as far as privacy is concerned we would be achieving it via hashing *(In layman terms it deals with unique representation of any given data piece be it string, integer etc. into a secure 256 bits representation, in context to sha256 protocol being used in the project)* rest of the credential fields or parameters which the user doesn't want to reveal or are required by the authority which's verifying.
+### **3. The "Zombie" Credential & The Waiting Game (Latency & Revocation)**
+Verifying or "taking back" a credential is currently a slow and a manual nightmare.
+* **The Phone Call Loop**: If an employer wants to be 100% sure a degree is real, they often have to manually contact the University (the Issuer) via email or phone, creating high-latency verification that wastes days of time.
+* **The Revocation Problem**: If a degree is rescinded or an ID card is reported stolen, it stays valid forever in the current system because there is no way to instantly tell every verifier that it has been canceled.
+* Without a real-time **Revocation Registry**, these "Zombie Credentials" continue to be used for fraud.
 
-<br>
-<br>
+### **4. The Spam Call Reality (Data Correlation)**
+We’ve all experienced it: you share your phone number for a simple "OTP verification," and two days later, you’re flooded with spam calls from companies you’ve never heard of.
+* Every time we share a centralized ID, we leave a digital footprint that companies use to track and profile us.
+* These data leaks and the constant "selling" of our contact info have turned a simple verification step into a lifelong privacy risk.
 
-   Moving on to to the verification purposes, this is where it gets interesting and requires the most of the project's logic to jump in; we would be achieving this from two perspectives;
-   1. If its actually issued by the institution being stated; 
 
-         this would be taken care by **ECDSA** *(Elliptic Curve Digital Signing Algorithm)*, which in brief works over modular inverses, and arithmetic operations in 2D and different private keys being held by institutions which makes each institution which is issuing the cred. unique;
-   
-   2. If the data is consistent or no;
-
-         by the concept of **Merkle trees** briefly, which would be bent on the fact of hashing the credentials originally for the uppermost layer or the leaves after which each adjacent leaf would be paired up and their strings' concatenation would be hashed to form the lower root node, we would be doing it iteratively even by pairing up the nodes until we are left with only one root, if you change any of the credential fields now, this would cause the lowermost or singular root to change by the principle of hashing being one-one function hence, effectively being a measure to check on tampering.
 
 <br>
 <br>
 <br>
 
-## -> Flow of the project :
-   As identified earlier the project consists of 3 main pillars which would be having different levels of control over the credentials and how they are allowed to interact with them (all of those three would be having different separate tabs in the interface);
+## $\color{#FFD700}{\text{-> Solution :}}$
+
+The goal of **SeCreDiVer** is to flip the "Privacy vs. Trust" paradox on its head. We provide a decentralized framework where a user can prove their identity with mathematical certainty without ever surrendering their personal privacy. 
+
+Our solution is built on four cryptographic pillars:
+
+### **1. Privacy through Selective Disclosure (SHA-256 Hashing)**
+To solve the "Aadhaar Problem," we implement **Selective Disclosure**. 
+* **The Logic**: Instead of sharing raw data for every field, the user provides a **SHA-256 hash** for sensitive information they wish to hide. 
+* Think of this as a unique **digital fingerprint**. The Verifier knows the fingerprint represents a specific, valid data point, but because hashing is a "one-way" function, they cannot reverse-engineer it to see your actual home address or phone number.
+
+### **2. Integrity through Merkle Trees (The Digital Seal)**
+To stop someone from simply editing their marks on a digital certificate, we utilize **Merkle Trees**. 
+* Every field is hashed into the "leaves" of a mathematical tree, which leads up to a single **Merkle Root**. 
+* This Root acts like a high-tech wax seal. If a user tries to change even a single character in their credential, the resulting Root would change entirely. By recomputing the tree, the Verifier gets instant proof of **Data Integrity**.
+
+
+
+### **3. Authenticity through ECDSA (Ending the "Phone Call" Loop)**
+To remove the need for manual institutional verification, we use the **Elliptic Curve Digital Signing Algorithm (ECDSA)**.
+* **Instant Trust**: Every institution (the Issuer) signs the Merkle Root with a unique **Private Key**. 
+* The Verifier uses the institution’s **Public Key** to authenticate this signature in milliseconds. This eliminates **Verification Latency**—there is no need to call the college or wait for an email to confirm if a degree is real.
+
+### **4. Real-Time Revocation (The Mathematical Kill-Switch)**
+Finally, we handle the issue of stolen or rescinded IDs through a **Revocation Registry**. 
+* Even if a document is mathematically perfect, the Verifier’s final check is against a digital "blacklist" of Merkle Roots. 
+* This ensures that if a college has "taken back" or **revoked** a credential, it cannot be used for fraud. It effectively kills "zombie" certificates before they can be exploited.
+
 <br>
 <br>
-   1. ***Issuer*** - relates to the institution which would be creating the credentials, can possibly **create and issue** credentials with different fields in different people's name, identity would be safeguarded by the **unique private key** generated for them used in ECDSA ;
-      
-   2. ***Holder*** - as the name suggests, it allows for **searching for the credentials** and downloading a **disclosure file** which would provide the user with only the **fields he/she wants disclosed to be revealed** and rest all **field names would be mentioned but the values would be hashed**, furthermore the disclosure would contain the **adjacent leaves or root nodes for rebuilding the tree to get the lowermost root node for verification**.
+---
 
-   3. ***Verifier*** - Can **upload the disclosure files** of the candidate to check if its **valid or no by Merkle trees** and also **states the field values revealed in order to check if all required fields or parameters by the verifier are present or no**.
+## $\color{#FFD700}{\text{-> 1. Application Domains :}}$
 
-*All three would also be having the power to revoke the credentials which would be effectively used to revoke any credential if found malicious, either by the issuer or the verifier.*
+**SeCreDiVer** is industry-agnostic. By swapping data fields, it serves any sector requiring "Trust without Over-exposure":
+
+* **Fair Recruitment & Social Equity:** Selectively hiding sensitive fields like **Caste** or **Religion** on certificates during interview rounds. This ensures merit-based hiring and eliminates unconscious bias while the system still cryptographically proves the degree is genuine.
+* **Healthcare:** Proving **"Vaccination Status"** for travel without revealing a full medical history.
+* **Finance:** Proving **"Income > ₹1 Lakh"** for loan approval without sharing exact bank balances.
+* **E-Governance:** Proving **"Residency"** for subsidies without sharing phone numbers or age to prevent tracking.
+* **Corporate:** Proving **"Admin Access"** to secure rooms without needing a central database of employee personal details.
+
+---
+
+## $\color{#FFD700}{\text{-> 2. Architecture Versatility :}}$
+
+Our **"Data-Blind"** core ensures the logic remains independent of the specific information it handles:
+
+* **Universal Blocks:** Treats all data (GPA, Passport, etc.) as generic Merkle leaves, requiring no code redesign for new document types.
+* **Scalability:** Efficiently handles anything from a simple 3-field ID to a complex 100-field legal contract.
+* **Cross-Domain Trust:** Any entity with a digital key can be an **"Issuer,"** allowing a bank to verify a college degree using the same ecosystem.
+
+---
+
+## $\color{#FFD700}{\text{-> 3. Future Expansion :}}$
+
+Built as a foundation for global identity standards, the project is ready for:
+
+* **Zero-Knowledge Proofs (ZKP):** Proving facts (e.g., "Over 18") without revealing the birth year or even a hash.
+* **Blockchain Integration:** Moving the **Revocation Registry** to a ledger for global tracking without a single point of failure.
+* **W3C Standards:** Aligning with international **DID (Decentralized Identifier)** protocols for global interoperability.
+* **Multi-Signature:** Requiring approval from two institutions (e.g., **IIT Roorkee** + **Ministry of Education**) for high-stakes credentials.
+<br>
+<br>
+
+## $\color{#FFD700}{\text{-> Project Flow :}}$
+The **SeCreDiVer** system follows a **modular 5-tier pipeline** designed for high security and user privacy. By separating the logic into specific packages, we ensure that the mathematical "Trust Engine" is independent of the user interface.
+
+1. **Mathematical Foundation (`core/`)**: The core engine handling **Elliptic Curve arithmetic** (`ec.py`) and **Merkle Tree generation** (`merkle.py`). This layer provides the cryptographic primitives for identity and data integrity.
+<br>
+
+2. **Institutional Issuance (`issuer/`)**: The Authority module where credentials are created and signed. It also maintains a real-time **Revocation Registry** (`revocation.py`) to instantly invalidate compromised or rescinded documents.
+<br>
+
+3. **Privacy & Selective Disclosure (`holder/`)**: The user’s digital wallet. Using `disclosure.py`, the user can hide sensitive fields (like **Caste**, **Address**, or **Phone Number**) by replacing them with **SHA-256 hashes**.
+<br>
+
+4. **The 4-Step Verification Pipeline (`verifier/`)**: A comprehensive audit that recomputes the Merkle Root to detect **tampering**, verifies the **ECDSA Signature** for authenticity, and checks the document’s expiry and revocation status.
+<br>
+
+5. **Integration & Interface (`app.py`)**: The orchestration layer. Using **Streamlit**, this file integrates all back-end modules into a real-time interactive dashboard, allowing for a seamless demonstration of the Issuer, Holder, and Verifier roles.
+<br>
+
+![Project Flow Diagram](assets/merkle_tree.png)
+
 
 <br>
 <br>
