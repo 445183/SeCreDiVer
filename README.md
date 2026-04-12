@@ -2,7 +2,7 @@
 ## *Selective Credential Disclosure & Verification*
 <br>
 
-$\color{#FF0000}{\text{To run the code refer to the instructions at the last}}$
+$\color{#FF0000}{\text{To run the code, know the folder structure or know the topics used refer to the instructions at the last}}$
 <br>
 <br>
 <br>
@@ -387,3 +387,13 @@ Built as a foundation for global identity standards, the project is ready for:
 |
 <br>
 |-- app.py              Streamlit UI — Issuer, Owner, Verification tabs*
+
+
+#### TOPICS used :-
+1. **Lists operations and comprehensions**, heavily used in merkle trees
+2. **JSON and dict** data structures used for project and json files interaction for reading, checking of the files are empty etc.
+3. **hashing concept is derived from dict's** method of storing data for O(1) look up time, again used heavily in merkle tress
+4. **Mathematics in py** *and related libraries like gmpy2* for fast calculations, modular arithmetic etc.
+5. **classes** for maintaining issuer objects in the issuer panel
+6. **data types** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **type casting**
+7. **Keyword arguments** to pass on multiple parameters as field values while creating credentials.
