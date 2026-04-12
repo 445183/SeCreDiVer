@@ -34,11 +34,11 @@ Institutions are struggling with a lack of **Data Integrity**.
 * Today, anyone with basic photo-editing skills can "update" their cgpa or change a date on a PDF certificate.
 * Because standard digital documents have no built-in way to prove they haven't been changed since they were issued, tampering has become a major legal and security headache.
 
-### **3. The "Zombie" Credential & The Waiting Game (Latency & Revocation)**
+### **3. The "FAKE" Credential & The Waiting Game (Delay of Verific. & Revocation)**
 Verifying or "taking back" a credential is currently a slow and a manual nightmare.
 * **The Phone Call Loop**: If an employer wants to be 100% sure a degree is real, they often have to manually contact the University (the Issuer) via email or phone, creating high-latency verification that wastes days of time.
-* **The Revocation Problem**: If a degree is rescinded or an ID card is reported stolen, it stays valid forever in the current system because there is no way to instantly tell every verifier that it has been canceled.
-* Without a real-time **Revocation Registry**, these "Zombie Credentials" continue to be used for fraud.
+* **The Revocation Problem**: If a degree is rescinded or an ID card is reported stolen, it stays valid forever in the current system because there is no way to instantly tell every verifier that it has been cancelled.
+* Without a real-time **Revocation Registry**, these "FAKE Credentials" continue to be used for fraud.
 
 ### **4. The Spam Call Reality (Data Correlation)**
 We’ve all experienced it: you share your phone number for a simple "OTP verification," and two days later, you’re flooded with spam calls from companies you’ve never heard of.
