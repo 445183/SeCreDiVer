@@ -332,7 +332,8 @@ Built as a foundation for global identity standards, the project is ready for:
 <br>
 
 ## -> How to run :
-
+###### (YouTube video is for reference on how to run the code after downloading the folder as a whole)
+         https://www.youtube.com/watch?v=2ZwBnIoTyO0
    1. Download the repository and navigate to the project directory *(The main folder, SeCreDiVer)* in command prompt.
    2. Install dependencies via ***pip install streamlit, hashlib, json***.
    3. Run the Streamlit app via **streamlit run app.py** command in command prompt ***after step 1.***.
