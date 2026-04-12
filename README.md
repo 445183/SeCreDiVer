@@ -109,7 +109,7 @@ Our **"Data-Blind"** core ensures the logic remains independent of the specific 
 
 Built as a foundation for global identity standards, the project is ready for:
 
-* **Zero-Knowledge Proofs (ZKP):** Proving facts (e.g., "Over 18") without revealing the birth year or even a hash.
+* **Zero-Knowledge Proofs (ZKP):** Proving facts (e.g., "Over 18") without revealing the birth year or even a hash; for more detailed explanation the implementation of the algorithm has been also added!
 * **Blockchain Integration:** Moving the **Revocation Registry** to a ledger for global tracking without a single point of failure.
 * **W3C Standards:** Aligning with international **DID (Decentralized Identifier)** protocols for global interoperability.
 * **Multi-Signature:** Requiring approval from two institutions (e.g., **IIT Roorkee** + **Ministry of Education**) for high-stakes credentials.
