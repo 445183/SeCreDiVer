@@ -325,7 +325,9 @@ Built as a foundation for global identity standards, the project is ready for:
 
 ###### Thereby this is a possible way of verification of credentials which the user wants to disclose without the verifier ever seeing them, which for now are being totally revealed !
 
-* **isPrime() :** for now the modular operations both of numbers and of the elliptic curve points are happening with respect to fixed primes as moduli however to make the project's primes dynamic; we can possibly generate over own primes and also to avoid the **root(n)** time complexity by avoiding the standard primality test by using, *Miller-Rabin test*; which is based on extension of the ***Fermat's little theorem (if, p is prime then a^(p-1) is congreunt to 1 mod p)*** which strictly requires ***a^(q*(2^(e))) to be either -1 or 1 mod p where q*(2^(e)) are proper divisors of p-1*** !, hence we check this condition for sufficiently large numbers of random values of ***a->[2,p-2]*** and if it satisfies then the number can be said to be prime!!
+* **isPrime() :** for now the modular operations, both of numbers and of the elliptic curve points are happening with respect to fixed primes as moduli however to make the project's primes dynamic; we can possibly generate over own primes and also to avoid the **root(n)** time complexity by avoiding the standard primality test by using, *Miller-Rabin test*; which is based on extension of the ***Fermat's little theorem (if, p is prime then a^(p-1) is congreunt to 1 mod p)*** which strictly requires ***a^(q * (2^(e))) to be either -1 or 1 mod p where q * (2^(e)) are proper divisors of p-1*** !, hence we check this condition for sufficiently large numbers of random values of ***a->[2,p-2]*** and if it satisfies then the number can be said to be prime!!
+
+###### NOTE: For further clarifications we have provided the implementation of those functions in zkp folder and fieldArith.py respectively
 <br>
 <br>
 
