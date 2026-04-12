@@ -400,3 +400,4 @@ Built as a foundation for global identity standards, the project is ready for:
 5. **CLASSES** for maintaining issuer objects in the issuer panel
 6. **DATA TYPES AND EXPLICIT TYPING** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **TYPE CASTING**
 7. **KEYWORD ARGUMENTS** to pass on multiple parameters as field values while creating credentials.
+8. **STREAMLIT** based user interaction panel development and local hosting.
