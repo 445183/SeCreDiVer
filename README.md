@@ -321,7 +321,10 @@ Our project is industry-agnostic. By swapping data fields, it serves any sector 
 
 Built as a foundation for global identity standards, the project is ready for:
 
-* **Zero-Knowledge Proofs (ZKP):** we aim at the verification of the value ***sG=R+cY*** holds where ***R = r * G, Y = d * G and s=(r + c * d)mod(n)***, *(where G is the generator point)* is provided to the verification institution by the holder of the private key d, hence without even revealing d to the verifier we can prove that holder knows d for some random message *c*, common to both.
+* **Zero-Knowledge Proofs (ZKP):** we aim if the equality: ***sG = R+cY*** holds where ***R = r * G, Y = d * G and s=(r + c * d)mod(n)***, *(where G is the generator point)* is provided to the verification institution by the holder of the private key d, hence without even revealing d to the verifier we can prove that holder knows d for some random message *c*, common to both.
+
+###### Thereby this is a possible way of verification of credentials which the user wants to disclose without the verifier ever seeing them, which for now are being totally revealed !
+
 * **isPrime() :**
 <br>
 <br>
