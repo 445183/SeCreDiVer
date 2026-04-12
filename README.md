@@ -388,12 +388,15 @@ Built as a foundation for global identity standards, the project is ready for:
 <br>
 |-- app.py              Streamlit UI — Issuer, Owner, Verification tabs*
 
+<br>
+<br>
+<br>
 
 #### TOPICS used :-
-1. **Lists operations and comprehensions**, heavily used in merkle trees
-2. **JSON and dict** data structures used for project and json files interaction for reading, checking of the files are empty etc.
-3. **hashing concept is derived from dict's** method of storing data for O(1) look up time, again used heavily in merkle tress
-4. **Mathematics in py** *and related libraries like gmpy2* for fast calculations, modular arithmetic etc.
-5. **classes** for maintaining issuer objects in the issuer panel
-6. **data types** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **type casting**
-7. **Keyword arguments** to pass on multiple parameters as field values while creating credentials.
+1. **LISTS OPERATIONS AND COMPREHENSION**, heavily used in merkle trees
+2. **JSON and DICT** data structures used for project and json files interaction for reading, checking of the files are empty etc.
+3. **HASHING concept is derived from DICT's** method of storing data for O(1) look up time, again used heavily in merkle tress
+4. **MATHEMATICS IN PY** *and related libraries like gmpy2* for fast calculations, modular arithmetic etc.
+5. **CLASSES** for maintaining issuer objects in the issuer panel
+6. **DATA TYPES AND EXPLICIT TYPING** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **TYPE CASTING**
+7. **KEYWORD ARGUMENTS** to pass on multiple parameters as field values while creating credentials.
