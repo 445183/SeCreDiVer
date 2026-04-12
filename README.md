@@ -67,8 +67,6 @@ To stop someone from simply editing their marks on a digital certificate, we uti
 * Every field is hashed into the "leaves" of a mathematical tree, which leads up to a single **Merkle Root**. 
 * This Root acts like a high-tech wax seal. If a user tries to change even a single character in their credential, the resulting Root would change entirely. By recomputing the tree, the Verifier gets instant proof of **Data Integrity**.
 
-
-
 ### **3. Authenticity through ECDSA (Ending the "Phone Call" Loop)**
 To remove the need for manual institutional verification, we use the **Elliptic Curve Digital Signing Algorithm (ECDSA)**.
 * **Instant Trust**: Every institution (the Issuer) signs the Merkle Root with a unique **Private Key**. 
@@ -82,39 +80,6 @@ Finally, we handle the issue of stolen or rescinded IDs through a **Revocation R
 <br>
 <br>
 ---
-
-## $\color{#FFD700}{\text{-> 1. Application Domains :}}$
-
-**SeCreDiVer** is industry-agnostic. By swapping data fields, it serves any sector requiring "Trust without Over-exposure":
-
-* **Fair Recruitment & Social Equity:** Selectively hiding sensitive fields like **Caste** or **Religion** on certificates during interview rounds. This ensures merit-based hiring and eliminates unconscious bias while the system still cryptographically proves the degree is genuine.
-* **Healthcare:** Proving **"Vaccination Status"** for travel without revealing a full medical history.
-* **Finance:** Proving **"Income > ₹1 Lakh"** for loan approval without sharing exact bank balances.
-* **E-Governance:** Proving **"Residency"** for subsidies without sharing phone numbers or age to prevent tracking.
-* **Corporate:** Proving **"Admin Access"** to secure rooms without needing a central database of employee personal details.
-
----
-
-## $\color{#FFD700}{\text{-> 2. Architecture Versatility :}}$
-
-Our **"Data-Blind"** core ensures the logic remains independent of the specific information it handles:
-
-* **Universal Blocks:** Treats all data (GPA, Passport, etc.) as generic Merkle leaves, requiring no code redesign for new document types.
-* **Scalability:** Efficiently handles anything from a simple 3-field ID to a complex 100-field legal contract.
-* **Cross-Domain Trust:** Any entity with a digital key can be an **"Issuer,"** allowing a bank to verify a college degree using the same ecosystem.
-
----
-
-## $\color{#FFD700}{\text{-> 3. Future Expansion :}}$
-
-Built as a foundation for global identity standards, the project is ready for:
-
-* **Zero-Knowledge Proofs (ZKP):** Proving facts (e.g., "Over 18") without revealing the birth year or even a hash; for more detailed explanation the implementation of the algorithm has been also added in folder (zkp(ind. implem.))!
-* **Blockchain Integration:** Moving the **Revocation Registry** to a ledger for global tracking without a single point of failure.
-* **W3C Standards:** Aligning with international **DID (Decentralized Identifier)** protocols for global interoperability.
-* **Multi-Signature:** Requiring approval from two institutions (e.g., **IIT Roorkee** + **Ministry of Education**) for high-stakes credentials.
-<br>
-<br>
 
 ## $\color{#FFD700}{\text{-> Project Flow :}}$
 The **SeCreDiVer** system follows a **modular 5-tier pipeline** designed for high security and user privacy. By separating the logic into specific packages, we ensure that the mathematical "Trust Engine" is independent of the user interface.
@@ -319,7 +284,7 @@ Allows the verifier to;
 
 <br>
 
-##### c) Check 3 — ECDSA signature verification — **verify()** in **core/ecdsa.p** :
+##### c) Check 3 — ECDSA signature verification — **verify()** in **core/ecdsa.py** :
    The verifier recovers the issuer's public key Q via **xyFromb64(disc['issuer_public_key'])** and the signature *(r, s)* via **dictToRS(disc['signature'])**. The root is converted to bytes via **bytes.fromhex(disc['root'])**. Then **verify(root_bytes, sig, Q)** is called:
 
    1. The root bytes are hashed and converted to integer *z* exactly as was done during signing.
@@ -339,6 +304,25 @@ Allows the verifier to;
    Revocation provides the issuer with the ability to invalidate credentials after issuance — for instance if a degree is rescinded, an employee is terminated, or a document is reported stolen. Since the Merkle root uniquely identifies every credential, adding it to the revocation list is both simple and unambiguous.
 
 <br>
+<br>
+<br>
+
+## $\color{#FFD700}{\text{-> Application Domains :}}$
+
+Our project is industry-agnostic. By swapping data fields, it serves any sector requiring **"Trust without Over-exposure"**:
+
+* **Fair Recruitment & Social Equity:** Selectively hiding sensitive fields like **Caste** or **Religion** on certificates during interview rounds. This ensures merit-based hiring and eliminates unconscious bias while the system still cryptographically proves the degree is genuine.
+* **Healthcare:** Proving **"Vaccination Status"** for travel without revealing a full medical history.
+* **E-Governance:** Proving **"Residency"** for subsidies without sharing phone numbers or age to prevent tracking.
+
+---
+
+## $\color{#FFD700}{\text{-> Future Expansion :}}$
+
+Built as a foundation for global identity standards, the project is ready for:
+
+* **Zero-Knowledge Proofs (ZKP):** we aim at the verification of the value ***sG=R+cY*** holds where ***R = r * G, Y = d * G and s=(r + c * d)mod(n)*** is provided to the verification institution by the holder of the private key d, hence without even revealing d to the verifier we can prove that holder knows d for some random message *c*, common to both.
+* **isPrime() :**
 <br>
 <br>
 
