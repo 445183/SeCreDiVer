@@ -394,11 +394,12 @@ Built as a foundation for global identity standards, the project is ready for:
 <br>
 
 #### TOPICS used :-
-1. **LISTS OPERATIONS AND COMPREHENSION**, heavily used in merkle trees
-2. **JSON and DICT** data structures used for project and json files interaction for reading, checking of the files are empty etc.
-3. **HASHING concept is derived from DICT's** method of storing data for O(1) look up time, again used heavily in merkle tress
-4. **MATHEMATICS IN PY** *and related libraries like gmpy2* for fast calculations, modular arithmetic etc.
-5. **CLASSES** for maintaining issuer objects in the issuer panel
-6. **DATA TYPES AND EXPLICIT TYPING** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **TYPE CASTING**
-7. **KEYWORD ARGUMENTS** to pass on multiple parameters as field values while creating credentials.
-8. **STREAMLIT** based user interaction panel development and local hosting.
+1. **LISTS OPERATIONS AND COMPREHENSION**, heavily used in merkle trees ;
+2. **JSON and DICT** data structures used for project and json files interaction for reading, checking of the files are empty etc ;
+3. **HASHING concept is derived from DICT's** method of storing data for O(1) look up time, again used heavily in merkle tress ;
+4. **MATHEMATICS IN PY** *and related libraries like gmpy2* for fast calculations, modular arithmetic etc ;
+5. **CLASSES** for maintaining issuer objects in the issuer panel ;
+6. **DATA TYPES AND EXPLICIT TYPING** in python and inferring them from variables to ensure **json serialability**; ie, the json files can't hold all data types which might cause data loss, so appropriately the data-type is changed by **TYPE CASTING** ;
+7. **KEYWORD ARGUMENTS** to pass on multiple parameters as field values while creating credentials ;
+8. **RECURSION AND ITERATION** *(by for and while loop)*, to generate the merkle tree's different levels ;
+9. **STREAMLIT** based user interaction panel development and local hosting.
