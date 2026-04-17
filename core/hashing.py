@@ -2,9 +2,7 @@ import hashlib
 
 def hash_bytes(data: bytes):
     """   Returns the raw 32-byte SHA-256 hash of any input.
-          .digest() is used here to get raw binary instead of a hex string.
-    
-    Example: hash_bytes(b"IITR") -> b'\x8e\x... (32 bytes of binary)        """
+          .digest() is used here to get raw binary instead of a hex string. """
     return hashlib.sha256(data).digest()
 
 def hash_leaf(enc_byt: bytes):
