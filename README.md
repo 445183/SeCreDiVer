@@ -99,7 +99,7 @@ The **SeCreDiVer** system follows a **modular 5-tier pipeline** designed for hig
 5. **Integration & Interface (`app.py`)**: The orchestration layer. Using **Streamlit**, this file integrates all back-end modules into a real-time interactive dashboard, allowing for a seamless demonstration of the Issuer, Holder, and Verifier roles.
 <br>
 
-![Project Flow Diagram](assets/merkle_tree.png)
+![Project Flow Diagram](illus/merkle_tree.jpeg)
 
 
 <br>
