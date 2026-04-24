@@ -7,7 +7,7 @@ $\color{#FF0000}{\text{To run the code, know the folder structure or know the to
 <br>
 <br>
 
-**-By** : *Aryan Kurkure*;  25125004     
+**-By** : *Aryan Kurkure*;  25125004
           *Devansh Masani*.  25125011   
 
 **-Pursuing** : *B.Tech in Data Science & Artificial Intelligence, IIT Roorkee*.
@@ -24,7 +24,7 @@ In our daily life, we often need to prove who we are — like for jobs, entering
 
 ---
 
-### **1. The Aadhaar problem Over-Disclosure **  
+### **1. The Aadhaar problem Over-Disclosure**  
 Think about when you use your Aadhaar card just to show your age.  
 
 * To prove you are "18+", you show your full details like address and other personal info.  
@@ -33,7 +33,7 @@ Think about when you use your Aadhaar card just to show your age.
 
 ---
 
-### **2. The "Photoshop" Fraud **  
+### **2. The "Photoshop" Fraud**  
 There is also a problem with fake documents.  
 
 * People can easily edit certificates using simple tools.  
@@ -42,7 +42,7 @@ There is also a problem with fake documents.
 
 ---
 
-### **3. The "FAKE" Credential & The Waiting Game **  
+### **3. The "FAKE" Credential & The Waiting Game**  
 Checking credentials is slow and difficult.  
 
 * **The Phone Call Loop**: Sometimes people have to call or email to verify a degree, which takes time.  
