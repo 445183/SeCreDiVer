@@ -2,8 +2,8 @@ from core.hashing import hash_leaf, hash_node
 from core.fieldEnc import encode_field
 
 def mkTree(fp: list[tuple[str, any]]):
-    """  Starts with raw data, hashes it into leaves, and pairs them up 
-    until we reach a single Merkle Root.   """
+    # Starts with raw data, hashes it into leaves, and pairs them up 
+    #until we reach a single Merkle Root.  
     tree = list()
     tree.append([])
     

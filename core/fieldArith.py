@@ -2,10 +2,9 @@ from secrets import randbelow
 from gmpy2 import powmod
 
 def modinv(a: int, p: int):
-    """The modular math 
-    In a modular field, you can not just divide two numbers .
-    To divide by a, you multiply by its modular inverse.
-    Logic: Uses Fermat's Little Theorem for calculating modular inverse of a = (a^(p-2) % p).       """
+    #In a modular field, you can not just divide two numbers .
+    #To divide by a number, you multiply by its modular inverse.
+    # Using Fermat's Little Theorem for calculating modular inverse of a = (a^(p-2) % p).       """
     # This works because for a prime p, a^(p-1) is congruent to 1 (mod p).
     # Therefore, a * a^(p-2) is congruent to 1 (mod p).
     return powmod(a, p - 2, p)  #(a^(p-2) % p)  % - modulus
@@ -14,20 +13,20 @@ def modinv(a: int, p: int):
 # of this we have used an standard prime number which is mostly used worldwide as a standard
 def is_prime(m: int, k=20):
     """ The Miller-Rabin primality Test:
-    A fast, probabilistic way to check if a big number is prime or not.
-    We run k number of tests. The more higher k is the more certain answer would be.
+    it is a fast way to check if a big number is prime or not.
+    We run k number of tests.
     """
     if m < 2: return False
     elif m == 2: return True
     
-    # 1. Decompose (m-1) into (2^e * q)
+    #  convert (m-1) into (2^e * q)
     # We take out all the factors of 2 from (m-1).
     e, q = 0, m - 1
     while((q & 1) == 0):
         q //= 2
         e += 1
         
-    # 2. Start the Tests
+    #  Start the Tests
     for i in range(k):
         # Pick a random number r to test for prime number
         r = randbelow(m - 3) + 2
@@ -43,7 +42,7 @@ def is_prime(m: int, k=20):
             else:
                 p *= 2 # Keep squaring the exponent
         
-        # If we reached the end without a pass, the number is definitely composite.
+        # If we reached the end without a pass, the number is composite.
         if p == m - 1:
             return False
             
