@@ -7,7 +7,7 @@ $\color{#FF0000}{\text{To run the code, know the folder structure or know the to
 <br>
 <br>
 
-**-By** : *Aryan Kurkure*;  25125004      
+**-By** : *Aryan Kurkure*;  25125004     
           *Devansh Masani*.  25125011   
 
 **-Pursuing** : *B.Tech in Data Science & Artificial Intelligence, IIT Roorkee*.
@@ -20,30 +20,47 @@ $\color{#FF0000}{\text{To run the code, know the folder structure or know the to
 
 ## $\color{#FFD700}{\text{-> Problem Statement :}}$
 
-In our daily lives, we are constantly asked to "prove" who we are. Whether it's applying for a job, entering a building, or registering for a website, we face a broken "Privacy vs. Trust" paradox. To gain an institution's trust, we are currently forced to sacrifice our personal privacy.
+In our daily life, we often need to prove who we are — like for jobs, entering buildings, or creating accounts online. But the current system is not good. To prove something simple, we end up sharing too much personal information. This creates a problem between **privacy and trust**.
+
+---
+
+### **1. The Aadhaar problem Over-Disclosure **  
+Think about when you use your Aadhaar card just to show your age.  
+
+* To prove you are "18+", you show your full details like address and other personal info.  
+* This is not needed for such a small task.  
+* Once you share this data, you don’t know how it will be used later.  
+
+---
+
+### **2. The "Photoshop" Fraud **  
+There is also a problem with fake documents.  
+
+* People can easily edit certificates using simple tools.  
+* There is no easy way to check if a document is original or not.  
+* Because of this, it is hard to trust digital files.  
+
+---
+
+### **3. The "FAKE" Credential & The Waiting Game **  
+Checking credentials is slow and difficult.  
+
+* **The Phone Call Loop**: Sometimes people have to call or email to verify a degree, which takes time.  
+* **The Revocation Problem**: If a credential is canceled, there is no fast way to inform others.  
+* So, fake or old credentials can still be used.  
+
+---
+
+### **4. Data Correlation**  
+We all have seen this — you give your number once, and then you get spam calls.  
+
+* When we share our data, it can be stored and used later.  
+* Companies may track or share this data.  
+* A small step can create big privacy problems.  
+
+---
 
 
-### **1. The "Aadhaar" Over-Disclosure (The Privacy Leak)**
-Think about the last time you used your Aadhaar card just to verify your age.
-* To show you are "Over 18," you end up handing over a document that contains your permanent home address, your father's name, and your unique biometric ID.
-* This is a massive over-disclosure of your **PII (Personally Identifiable Information)**.
-* Once that data is out there, you lose control; it can be used to track you across government websites or shared with third parties without you ever knowing.
-
-### **2. The "Photoshop" Fraud (The Trust Gap)**
-Institutions are struggling with a lack of **Data Integrity**.
-* Today, anyone with basic photo-editing skills can "update" their cgpa or change a date on a PDF certificate.
-* Because standard digital documents have no built-in way to prove they haven't been changed since they were issued, tampering has become a major legal and security headache.
-
-### **3. The "FAKE" Credential & The Waiting Game (Delay of Verific. & Revocation)**
-Verifying or "taking back" a credential is currently a slow and a manual nightmare.
-* **The Phone Call Loop**: If an employer wants to be 100% sure a degree is real, they often have to manually contact the University (the Issuer) via email or phone, creating high-latency verification that wastes days of time.
-* **The Revocation Problem**: If a degree is rescinded or an ID card is reported stolen, it stays valid forever in the current system because there is no way to instantly tell every verifier that it has been cancelled.
-* Without a real-time **Revocation Registry**, these "FAKE Credentials" continue to be used for fraud.
-
-### **4. The Spam Call Reality (Data Correlation)**
-We’ve all experienced it: you share your phone number for a simple "OTP verification," and two days later, you’re flooded with spam calls from companies you’ve never heard of.
-* Every time we share a centralized ID, we leave a digital footprint that companies use to track and profile us.
-* These data leaks and the constant "selling" of our contact info have turned a simple verification step into a lifelong privacy risk.
 
 
 
@@ -53,53 +70,90 @@ We’ve all experienced it: you share your phone number for a simple "OTP verifi
 
 ## $\color{#FFD700}{\text{-> Solution :}}$
 
-The goal of **SeCreDiVer** is to flip the "Privacy vs. Trust" paradox on its head. We provide a decentralized framework where a user can prove their identity with mathematical certainty without ever surrendering their personal privacy. 
+The idea of **SeCreDiVer** is to fix the privacy vs trust problem. Instead of forcing users to share all their personal data, our system lets them prove things in a secure way without revealing everything.
+We use some basic cryptography concepts to achieve this:
 
-Our solution is built on four cryptographic pillars:
+### **1. Privacy using Selective Disclosure (SHA-256 Hashing)**  
+To solve the Aadhaar over-sharing problem, we use **Selective Disclosure**.
+* Instead of sharing actual data, the user can share a **hash (SHA-256)** of the data.  
+* You can think of a hash like a **digital fingerprint**.  
+* The verifier knows it is valid, but cannot see the original value (like address or phone number).  
 
-### **1. Privacy through Selective Disclosure (SHA-256 Hashing)**
-To solve the "Aadhaar Problem," we implement **Selective Disclosure**. 
-* **The Logic**: Instead of sharing raw data for every field, the user provides a **SHA-256 hash** for sensitive information they wish to hide. 
-* Think of this as a unique **digital fingerprint**. The Verifier knows the fingerprint represents a specific, valid data point, but because hashing is a "one-way" function, they cannot reverse-engineer it to see your actual home address or phone number.
+---
 
-### **2. Integrity through Merkle Trees (The Digital Seal)**
-To stop someone from simply editing their marks on a digital certificate, we utilize **Merkle Trees**. 
-* Every field is hashed into the "leaves" of a mathematical tree, which leads up to a single **Merkle Root**. 
-* This Root acts like a high-tech wax seal. If a user tries to change even a single character in their credential, the resulting Root would change entirely. By recomputing the tree, the Verifier gets instant proof of **Data Integrity**.
+### **2. Data Safety using Merkle Trees (Integrity Check)**  
+To stop users from editing certificates, we use **Merkle Trees**.
+* Each field is converted into a hash and combined into a tree structure.  
+* This creates a final value called the **Merkle Root**.  
+* If even one small value changes, the root also changes.  
+* So, any tampering can be easily detected.  
 
-### **3. Authenticity through ECDSA (Ending the "Phone Call" Loop)**
-To remove the need for manual institutional verification, we use the **Elliptic Curve Digital Signing Algorithm (ECDSA)**.
-* **Instant Trust**: Every institution (the Issuer) signs the Merkle Root with a unique **Private Key**. 
-* The Verifier uses the institution’s **Public Key** to authenticate this signature in milliseconds. This eliminates **Verification Latency**—there is no need to call the college or wait for an email to confirm if a degree is real.
+---
 
-### **4. Real-Time Revocation (The Mathematical Kill-Switch)**
-Finally, we handle the issue of stolen or rescinded IDs through a **Revocation Registry**. 
-* Even if a document is mathematically perfect, the Verifier’s final check is against a digital "blacklist" of Merkle Roots. 
-* This ensures that if a college has "taken back" or **revoked** a credential, it cannot be used for fraud. It effectively kills "zombie" certificates before they can be exploited.
+### **3. Authenticity using ECDSA (No More Manual Verification)**  
+To avoid calling or emailing institutions, we use **ECDSA digital signatures**.
+
+* The issuer signs the credential using a **private key**.  
+* The verifier checks it using a **public key**.  
+* This process is fast and happens instantly.  
+* No need to manually verify documents anymore.  
+
+---
+
+### **4. Revocation System (Cancel Invalid Credentials)**  
+To handle fake or canceled credentials, we use a **revocation list**.
+
+* All invalid credentials are stored in a list (blacklist).  
+* During verification, we check if the credential is in this list.  
+* If yes, it is rejected immediately.  
+
+---
 
 <br>
 <br>
+
 ---
 
 ## $\color{#FFD700}{\text{-> Project Flow :}}$
-The **SeCreDiVer** system follows a **modular 5-tier pipeline** designed for high security and user privacy. By separating the logic into specific packages, we ensure that the mathematical "Trust Engine" is independent of the user interface.
 
-1. **Mathematical Foundation (`core/`)**: The core engine handling **Elliptic Curve arithmetic** (`ec.py`) and **Merkle Tree generation** (`merkle.py`). This layer provides the cryptographic primitives for identity and data integrity.
-<br>
+The **SeCreDiVer** system is divided into different parts to keep things simple and secure.
 
-2. **Institutional Issuance (`issuer/`)**: The Authority module where credentials are created and signed. It also maintains a real-time **Revocation Registry** (`revocation.py`) to instantly invalidate compromised or rescinded documents.
-<br>
+---
 
-3. **Privacy & Selective Disclosure (`holder/`)**: The user’s digital wallet. Using `disclosure.py`, the user can hide sensitive fields (like **Caste**, **Address**, or **Phone Number**) by replacing them with **SHA-256 hashes**.
-<br>
+1. **Core (`core/`)**  
+   This contains the main logic like elliptic curve math and Merkle tree functions.  
+   It handles all the cryptographic operations.  
 
-4. **The 4-Step Verification Pipeline (`verifier/`)**: A comprehensive audit that recomputes the Merkle Root to detect **tampering**, verifies the **ECDSA Signature** for authenticity, and checks the document’s expiry and revocation status.
-<br>
+---
 
-5. **Integration & Interface (`app.py`)**: The orchestration layer. Using **Streamlit**, this file integrates all back-end modules into a real-time interactive dashboard, allowing for a seamless demonstration of the Issuer, Holder, and Verifier roles.
-<br>
+2. **Issuer (`issuer/`)**  
+   This part is used by institutions to create and sign credentials.  
+   It also manages the revocation list.  
 
-![Project Flow Diagram](illus/merkle_tree.jpeg)
+---
+
+3. **Holder (`holder/`)**  
+   This is the user’s wallet.  
+   The user can store credentials and hide sensitive fields using hashing.  
+
+---
+
+4. **Verifier (`verifier/`)**  
+   This checks if a credential is valid or not.  
+   It verifies:
+   - data integrity (Merkle Tree)  
+   - signature (ECDSA)  
+   - expiry and revocation status  
+
+---
+
+5. **App (`app.py`)**  
+   This connects everything together using **Streamlit**.  
+   It provides a simple interface to test issuer, holder, and verifier roles.  
+
+---
+
+
 
 
 <br>
@@ -179,6 +233,7 @@ Allows the issuer to;
    Before any field value can be hashed, it must be converted to bytes in a consistent and unambiguous way. **encode_field()** takes the field name and its Python value and produces a UTF-8 encoded byte string of the format **name:type:value**. For example, a field named *degree* with value *BSc CS* becomes **b'degree:str:BSc CS'**. The type label is derived from **type(value).__name__** and is included in the encoding so that two fields with the same value but different types — such as integer 1 and boolean True — never produce the same byte string and therefore never collide in the Merkle tree.
 
 <br>
+![Project Flow Diagram](illus/merkle_tree.jpeg)
 
 ##### c) Merkle tree construction — **mkTree()** in **core/merkle.py** :
    After all field pairs are collected, **mkTree()** is called with the list of *(name, value)* tuples. It works in two stages:
