@@ -233,7 +233,7 @@ Allows the issuer to;
    Before any field value can be hashed, it must be converted to bytes in a consistent and unambiguous way. **encode_field()** takes the field name and its Python value and produces a UTF-8 encoded byte string of the format **name:type:value**. For example, a field named *degree* with value *BSc CS* becomes **b'degree:str:BSc CS'**. The type label is derived from **type(value).__name__** and is included in the encoding so that two fields with the same value but different types — such as integer 1 and boolean True — never produce the same byte string and therefore never collide in the Merkle tree.
 
 <br>
-![Project Flow Diagram](illus/merkle_tree.jpeg)
+![Merkle Tree Diagram](illus/merkle_tree.jpeg)
 
 ##### c) Merkle tree construction — **mkTree()** in **core/merkle.py** :
    After all field pairs are collected, **mkTree()** is called with the list of *(name, value)* tuples. It works in two stages:
