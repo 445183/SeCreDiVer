@@ -7,7 +7,7 @@ $\color{#FF0000}{\text{To run the code, know the folder structure or know the to
 <br>
 <br>
 
-**-By** : *Aryan Kurkure*;  25125011      
+**-By** : *Aryan Kurkure*;  25125004      
           *Devansh Masani*.  25125011   
 
 **-Pursuing** : *B.Tech in Data Science & Artificial Intelligence, IIT Roorkee*.
